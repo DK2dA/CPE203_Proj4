@@ -2,13 +2,12 @@ import processing.core.PImage;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
-public class OctoFull extends Octo{
+public class SharkFull extends Shark{
 
-    public OctoFull(String id, Point position,
-                  List<PImage> images, int resourceLimit,
-                  int actionPeriod, int animationPeriod, PathingStrategy strat)
+    public SharkFull(String id, Point position,
+                     List<PImage> images, int resourceLimit,
+                     int actionPeriod, int animationPeriod, PathingStrategy strat)
     {
         super(id, position, images, resourceLimit, actionPeriod,
                 animationPeriod, strat);

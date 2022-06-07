@@ -22,6 +22,12 @@ final class WorldModel
 
    private static final int FISH_REACH = 1;
 
+//   private static final PathingStrategy cPathing = new SingleStepPathingStrategy();
+//   private static final PathingStrategy oPathing = new SingleStepPathingStrategy();
+   private static final PathingStrategy cPathing = new AStarPathingStrategy();
+   private static final PathingStrategy oPathing = new AStarPathingStrategy();
+
+
    public WorldModel(int numRows, int numCols, Background defaultBackground)
    {
       this.numRows = numRows;
@@ -154,7 +160,7 @@ final class WorldModel
       List<PImage> images)
    {
       return new OctoFull(id, position, images,
-         resourceLimit, actionPeriod, animationPeriod);
+         resourceLimit, actionPeriod, animationPeriod, oPathing);
    }
 
    public static OctoNotFull createOctoNotFull(String id, int resourceLimit,
@@ -162,7 +168,23 @@ final class WorldModel
       List<PImage> images)
    {
       return new OctoNotFull(id, position, images,
-         resourceLimit, 0, actionPeriod, animationPeriod);
+         resourceLimit, 0, actionPeriod, animationPeriod, oPathing);
+   }
+
+   public static OctoFull createSharkFull(String id, int resourceLimit,
+                                         Point position, int actionPeriod, int animationPeriod,
+                                         List<PImage> images)
+   {
+      return new OctoFull(id, position, images,
+              resourceLimit, actionPeriod, animationPeriod, oPathing);
+   }
+
+   public static OctoNotFull createSharkNotFull(String id, int resourceLimit,
+                                               Point position, int actionPeriod, int animationPeriod,
+                                               List<PImage> images)
+   {
+      return new OctoNotFull(id, position, images,
+              resourceLimit, 0, actionPeriod, animationPeriod, oPathing);
    }
 
    public static Obstacle createObstacle(String id, Point position,
@@ -180,7 +202,7 @@ final class WorldModel
    public static Crab createCrab(String id, Point position,
       int actionPeriod, int animationPeriod, List<PImage> images)
    {
-      return new Crab(id, position, images, actionPeriod, animationPeriod);
+      return new Crab(id, position, images, actionPeriod, animationPeriod, cPathing);
    }
 
    public static Quake createQuake(Point position, List<PImage> images)
@@ -195,7 +217,7 @@ final class WorldModel
       return new Sgrass(id, position, images, actionPeriod);
    }
 
-   private boolean withinBounds(Point pos)
+   public boolean withinBounds(Point pos)
    {
       return pos.y >= 0 && pos.y < this.numRows &&
               pos.x >= 0 && pos.x < this.numCols;

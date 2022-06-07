@@ -8,38 +8,27 @@ public class Crab extends AnimationEntity{
 
     //Quake stuff
     private static final String QUAKE_KEY = "quake";
+    private PathingStrategy strategy;
 
     public Crab(String id, Point position,
                   List<PImage> images, int actionPeriod,
-                int animationPeriod)
+                int animationPeriod, PathingStrategy pStrat)
     {
         super(id, position, images, actionPeriod, animationPeriod);
+        this.strategy = pStrat;
     }
 
     public Point nextPositionCrab(WorldModel world,
                                   Point destPos)
     {
-        int horiz = Integer.signum(destPos.x - this.getPosition().x);
-        Point newPos = new Point(this.getPosition().x + horiz,
-                this.getPosition().y);
-
-        Optional<Entity> occupant = world.getOccupant(newPos);
-
-        if (horiz == 0 ||
-                (occupant.isPresent() && !(occupant.get().getClass() == Fish.class)))
-        {
-            int vert = Integer.signum(destPos.y - this.getPosition().y);
-            newPos = new Point(this.getPosition().x, this.getPosition().y + vert);
-            occupant = world.getOccupant(newPos);
-
-            if (vert == 0 ||
-                    (occupant.isPresent() && !(occupant.get().getClass() == Fish.class)))
-            {
-                newPos = this.getPosition();
-            }
-        }
-
-        return newPos;
+        List<Point> points;
+        points = strategy.computePath(getPosition(), destPos,
+                p -> world.withinBounds(p) && !world.isOccupied(p),
+                Point::adjacent,
+                PathingStrategy.CARDINAL_NEIGHBORS);
+        if (points.size() != 0)
+            return points.get(0);
+        return getPosition();
     }
 
     public boolean moveToCrab(WorldModel world,
@@ -95,5 +84,4 @@ public class Crab extends AnimationEntity{
                 this.createActivityAction(world, imageStore),
                 nextPeriod);
     }
-
 }

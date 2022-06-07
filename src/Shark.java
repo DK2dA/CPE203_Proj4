@@ -2,13 +2,13 @@ import processing.core.PImage;
 
 import java.util.List;
 
-public abstract class Octo extends AnimationEntity{
+public abstract class Shark extends AnimationEntity{
     private int resourceLimit;
     private PathingStrategy strategy;
 
-    public Octo(String id, Point position,
-                    List<PImage> images, int resourceLimit, int actionPeriod,
-                    int animationPeriod, PathingStrategy pStrat)
+    public Shark(String id, Point position,
+                 List<PImage> images, int resourceLimit, int actionPeriod,
+                 int animationPeriod, PathingStrategy pStrat)
     {
         super(id, position, images, actionPeriod, animationPeriod);
         this.resourceLimit = resourceLimit;

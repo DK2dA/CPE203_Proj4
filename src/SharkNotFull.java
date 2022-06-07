@@ -2,14 +2,13 @@ import processing.core.PImage;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
-public class OctoNotFull extends Octo{
+public class SharkNotFull extends Shark{
     private int resourceCount;
 
-    public OctoNotFull(String id, Point position,
-                  List<PImage> images, int resourceLimit, int resourceCount,
-                  int actionPeriod, int animationPeriod, PathingStrategy strat)
+    public SharkNotFull(String id, Point position,
+                        List<PImage> images, int resourceLimit, int resourceCount,
+                        int actionPeriod, int animationPeriod, PathingStrategy strat)
     {
         super(id, position, images, resourceLimit, actionPeriod,
                 animationPeriod, strat);
